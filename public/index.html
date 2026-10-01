@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- alma-alert/public/index.html · version: 0.1.0 -->
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alma Alert</title>
+<style>
+  :root { --sfondo: #f7f7f5; --testo: #1d1d1b; --tenue: #6b6b66; --linea: #e2e2dc; --accento: #1f5fbf; }
+  @media (prefers-color-scheme: dark) { :root { --sfondo: #161615; --testo: #ecece8; --tenue: #a0a09a; --linea: #2c2c29; --accento: #7aa7ff; } }
+  body { margin: 0; background: var(--sfondo); color: var(--testo); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p { color: var(--tenue); }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 24px 0; }
+  dt { color: var(--tenue); }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+  a { color: var(--accento); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Alma Alert</h1>
+  <p>La pipeline dei Google Alert di Alma Sicurezza: ogni ora legge le notizie, le valuta e tiene aggiornati i Comuni caldi. Le notizie e i contatti si guardano nel gestionale, area Commerciale.</p>
+  <dl id="numeri"><dt>Stato</dt><dd>…</dd></dl>
+  <p><a href="https://gestionale-alma-chi.vercel.app/commerciale">Apri i Comuni caldi nel gestionale</a></p>
+</main>
+<script>
+  const voci = [["foglio", "Foglio Google"], ["articoli", "Notizie in archivio"], ["rilevanti", "Rilevanti"],
+    ["da_elaborare", "Da elaborare"], ["comuni_caldi", "Comuni caldi"], ["feed_attivi", "Feed attivi"]];
+  fetch("/api/stato").then((r) => r.json()).then((s) => {
+    const dl = document.getElementById("numeri");
+    if (!s.pronto) { dl.innerHTML = "<dt>Stato</dt><dd>" + (s.motivo || "non pronto") + "</dd>"; return; }
+    const g = s.ultimoGiro;
+    dl.innerHTML = voci.map(([k, n]) => `<dt>${n}</dt><dd>${s[k] ?? "-"}</dd>`).join("") +
+      `<dt>Ultimo giro</dt><dd>${g ? new Date(g.iniziato_il).toLocaleString("it-IT") + " · " + g.esito : "-"}</dd>`;
+  }).catch(() => {});
+</script>
+</body>
+</html>

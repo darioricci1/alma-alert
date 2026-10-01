@@ -1,5 +1,5 @@
 // alma-alert/api/confronto.js
-// version: 0.1.0
+// version: 0.1.1
 //
 // La prova del motore sul vero: prende le notizie che l'Apps Script del
 // foglio ha gia' finito (stato «full_3.1», origine «foglio»), le rivaluta con
@@ -14,7 +14,10 @@ import { autorizzato, risposta } from "../lib/porta.js";
 
 export default async function handler(req, res) {
   if (!autorizzato(req)) return risposta(res, 401, { errore: "Token mancante o sbagliato." });
-  const quante = Math.min(Number(new URL(req.url, "http://x").searchParams.get("quante")) || 3000, 20000);
+  const parametri = new URL(req.url, "http://x").searchParams;
+  const quante = Math.min(Number(parametri.get("quante")) || 3000, 20000);
+  // ?solo=motivo: gli esempi dove cambia soltanto il testo del motivo.
+  const soloMotivo = parametri.get("solo") === "motivo";
   try {
     const M = await caricaMotore(db);
     const righe = await db.query(
@@ -36,7 +39,7 @@ export default async function handler(req, res) {
       if (r.motivo !== motivo) diversi.push("motivo");
       for (const d of diversi) conta[d]++;
       if (!diversi.length) conta.tutto++;
-      else if (esempi.length < 25 && diversi.some((d) => d !== "motivo")) {
+      else if (esempi.length < 25 && (soloMotivo ? diversi.join() === "motivo" : diversi.some((d) => d !== "motivo"))) {
         esempi.push({ titolo: a.titolo, url: a.url, foglio: { score: a.score, rilevante: a.rilevante, comune: a.comune, tema: a.tema, motivo },
           qui: { score: r.score, rilevante: r.rilevante, comune: r.comune, tema: r.tema, motivo: r.motivo }, diversi });
       }

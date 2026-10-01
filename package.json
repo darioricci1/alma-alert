@@ -1,6 +1,6 @@
 {
   "name": "alma-alert",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "La pipeline dei Google Alert di Alma Sicurezza: notizie, punteggi e Comuni caldi su Neon. Si guarda dal gestionale, area Commerciale.",

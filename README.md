@@ -1,5 +1,7 @@
 # Alma Alert
 
+> Repository suo dal 28/10/2026 (prima era una cartella del monorepo dei progetti nuovi). Sito: https://alma-alert.vercel.app.
+
 <!-- version: 0.1.0 -->
 
 La pipeline dei Google Alert di Alma Sicurezza, fuori dal foglio Google.

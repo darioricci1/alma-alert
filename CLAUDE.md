@@ -1,7 +1,16 @@
 # Istruzioni per Claude su alma-alert
 
-Vale tutto il CLAUDE.md della culla (push diretto su `main`, versioni in
-testa ai file). In più, questo è software di Alma Sicurezza:
+Repository suo dal 28/10/2026 (prima era una cartella del monorepo dei
+progetti nuovi). Le regole di sempre:
+
+- Push diretto su `main` appena il lavoro è finito, senza branch né pull
+  request: Vercel ripubblica da solo. Prima del push si controlla che il
+  codice sia sano.
+- Ogni file di codice porta la versione in testa: patch per una correzione,
+  minor per una funzionalità nuova.
+- I dati stanno solo su Neon.
+
+In più, questo è software di Alma Sicurezza:
 
 - È elencato nel registro del gestionale (`nucleo/software-registro.js` di
   `darioricci1/gestionale-alma`, pagina Software): ogni lavoro qui che cambia

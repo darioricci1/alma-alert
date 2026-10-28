@@ -1,9 +1,19 @@
 {
   "outputDirectory": "public",
   "crons": [
-    { "path": "/api/giro", "schedule": "7 * * * *" }
+    {
+      "path": "/api/giro",
+      "schedule": "7 * * * *"
+    }
   ],
   "functions": {
-    "api/giro.js": { "maxDuration": 300 }
+    "api/giro.js": {
+      "maxDuration": 300
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "claude/**": false
+    }
   }
 }
